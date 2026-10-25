@@ -8,15 +8,18 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    api.get("/dashboard")
-      .then((response) => setData(response.data))
-      .catch(() => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        setError("Your session has expired. Please sign in again.");
-      });
-  }, []);
+ useEffect(() => {
+   api.get("/dashboard")
+     .then((response) => setData(response.data))
+     .catch((error) => {
+       if (error.response?.status !== 401) {
+         setError(
+           error.response?.data?.message ||
+           "Unable to load dashboard. Please try again."
+         );
+       }
+     });
+ }, []);
 
   function logout() {
     localStorage.removeItem("token");
