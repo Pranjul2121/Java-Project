@@ -14,6 +14,15 @@ export default function Register() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
+    if (name.trim().length === 0) {
+      setError("Name is required.");
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
     setLoading(true);
 
     try {

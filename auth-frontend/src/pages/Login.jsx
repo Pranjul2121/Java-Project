@@ -13,6 +13,10 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
+    if (!email.trim() || !password) {
+      setError("Please enter your email and password.");
+      return;
+    }
     setLoading(true);
 
     try {
